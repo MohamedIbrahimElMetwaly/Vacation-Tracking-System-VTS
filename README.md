@@ -6,7 +6,7 @@
 
 <hr>
 
-## Actores:
+## Actors:
 
 **Employee**:
 The main user of the system,an Employee uses this system to manager his/her vacation time.<br>
@@ -88,7 +88,7 @@ archiving all log files.<br>
 <br>
 
 <div style="text-align:center">
-<img src="task1\Employee-Manager-ManageTime.png" />
+<img src="task1\Employee-Manager-flowchart-diagram.png" />
 </div>
 
 <br>
@@ -99,5 +99,5 @@ archiving all log files.<br>
 <br>
 
 <div style="text-align: center">
-<img src="task1\Employee-Manager-sequence-diagram.png">/
+<img src="task1\Employee-Manager-sequence-diagram.png">
 </div>
