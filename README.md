@@ -57,6 +57,16 @@ archiving all log files.<br>
 
 ### Use case:1
 
+#### **Goal**
+
+The Employee wishes to submit a new request for vacation time.
+
+#### **Preconditions**
+
+The employee is authenticated by the portal framework and
+identified as an employee of the company with privileges to manage his or her
+own vacation time.
+
 #### **Use case name: Manage Time**
 
 1. The employee begins by selecting a link from the intranet portal to the
@@ -112,7 +122,7 @@ archiving all log files.<br>
 <br>
 
 <div style="text-align:center">
-<img src="task1\Employee-Manager-flowchart-diagram.png" />
+<img src="use-case-01\Employee-Manager-flowchart-diagram.png" />
 </div>
 
 <br>
@@ -123,7 +133,7 @@ archiving all log files.<br>
 <br>
 
 <div style="text-align: center">
-<img src="task1\Employee-Manager-sequence-diagram.png">
+<img src="use-case-01\Employee-Manager-sequence-diagram.png">
 </div>
 
 <br>
@@ -140,4 +150,149 @@ createVacationRequest(int employeeId, String vacationType, Date startDate, Date 
       sendRequest(employeeId, vacationType, startDate, endDate)
       if isRequireManagerApproval(employeeId)
          sendRequestManagerApprovalEmail(employee, vacationType, startDate, endDate)
+```
+
+<hr>
+
+### Use case:2
+
+#### **Goal**
+
+The employee wants to withdraw an outstanding request for vacation time.
+
+#### **Preconditions**
+
+An employee has made a vacation time request, and that
+request has yet to be approved or denied by an authorized manager. See also
+main flow preconditions.
+
+#### **Use case name: Withdraw Request**
+
+1. The employee navigates to the VTS home page through the intranet
+   portal application, which identifies and authenticates the employee with
+   the privileges necessary for using the VTS.
+2. The VTS home page contains a summary of vacation time requests,
+   outstanding balances per category of time, and the current status of all
+   active vacation time requests for the previous 6 months and up to 18
+   months in the future.
+3. The employee selects a vacation time request to withdraw, one that is
+   currently pending approval.
+4. The VTS prompts the employee to confirm the request to withdraw the
+   previously submitted vacation time request.
+5. The employee confirms the desire to withdraw, and the request is
+   removed from the manager’s list of pending approvals.
+6. The system sends a notification e-mail to the manager.
+7. The system updates the request state to withdrawn.
+
+#### **Flowchart**
+
+<br>
+<br>
+
+<div style="text-align:center">
+<img src="use-case-02\Employee-withdraw-pending-request-flowchart.png" />
+</div>
+
+<br>
+
+#### **Sequence Diagram**
+
+<br>
+<br>
+
+<div style="text-align: center">
+<img src="use-case-02\Employee-withdraw-request-sequence-diagram.png">
+</div>
+
+<br>
+<br>
+
+#### **Pseudocode:**
+
+```
+pendingRequestWithdraw(int employeeId, int requestId)
+   updateRequestStatusToWithdraw(employeeId, requestId)
+   Integer managerId = hasManager(employeeId)
+   if(managerId != null)
+      sendToEmailServiceToNotifiyManager(employeeId, managerId)
+```
+
+<hr>
+
+### Use case:3
+
+#### **Goal**
+
+The employee wants to cancel an approved vacation time request.
+
+#### **Preconditions**
+
+The employee has a vacation time request that has been
+approved and is scheduled for some time in the future or the recent past (previous
+5 business days). See also main flow preconditions.
+
+#### **Use case name: Cancel Approved Request**
+
+1. The employee navigates to the VTS home page through the intranet
+   portal application, which identifies and authenticates the employee with
+   the privileges necessary for using the VTS.
+2. The VTS home page contains a summary of vacation time requests,
+   outstanding balance per category of time, and the current status of all
+   active vacation time requests for the previous 6 months and up to 18
+   months in the future.
+3. The employee selects a vacation time request to cancel, one that is in
+   the future (or recent past) and has been approved.
+4. If the request is in the future, the employee is prompted to confirm the
+   cancellation. If the request is in the recent past, the employee is
+   prompted to confirm the cancellation and provide a short explanation. If
+   the employee approves the cancellation and provides the required information,
+   an e-mail notification is sent to the manager, and the state of
+   the request is changed to canceled. The time allowances used to make
+   the request are returned to the employee. The employee can also abort
+   the cancellation, effecting no changes to the current requests.
+5. The employee is returned to the main VTS home page. The summaries
+   are updated to reflect any
+
+#### **Flowchart**
+
+<br>
+<br>
+
+<div style="text-align:center">
+<img src="use-case-03\Employee-cancel-approved-request-flowchart.png" />
+</div>
+
+<br>
+
+#### **Sequence Diagram**
+
+<br>
+<br>
+
+<div style="text-align: center">
+<img src="use-case-03\Employee-cancel-approved-req-sequence-diagram.png">
+</div>
+
+<br>
+<br>
+
+#### **Pseudocode:**
+
+```
+cancelApprovedRequest(int requestId, int employeeId)
+   if(requestInFuture(requestId))
+      askUserConfirmation()
+   else
+      askUserConfirmationAndExplanation()
+
+   if(IsUserAbortCancelProcess())
+      return
+
+   updateRequestStatus(requestId, employeeId)
+   updateEmployeeOutStandingBalance(employeeId)
+
+   Integer managerId = getEmployeeManager(employeeId)
+   if(managerId != null)
+      sendEmailToManagerUsingEmailService(employeeId, managerId)
+
 ```
