@@ -1,10 +1,36 @@
 # Vacation Tracking System (VTS)
 
+## Vision:
+
+A Vacation Tracking System(VTS) will provide individual employees with the capability to manage their own vacation time. sick leave, and personal time off, without having to be an expert in company policy or the local facility's leave policies.
+
+## Functional Requirements:
+
+1. Implements a flexible rules-based system for validating and verifying leave requests.
+2. Enables manager approval. (Optional)
+3. Provides access to requests for the previous calendar year, and allows requests to be made up to a year and a half in the future.
+4. Uses e-mail notification to request manager approval and notify employees of request status changes.
+5. Keeps activity logs for all transactions.
+6. Enables the HR and system adminstration personnel to override all actions resticted by rules, with the logging of those overrides.
+7. Allow managers to directly award personal leave time (with system-set limits).
+8. Provides a web service interface for other internal systems to query any given employee's vacation request summary.
+9. Interfaces with the HR department legacy systems to retrieve required employee information and changes.
+
+## Non-Functional Requirements:
+
+1. The system should be easy to use
+2. Approval for vacation requests process will be faster than manual process.
+3. System will reduce time spend by the HR department
+
+## Constraints:
+
+1. Uses existing hardware and middleware.
+2. Implemented as an extension to the existing intranet portal system.
+3. Must use the portal's single-sign-on mechanisms for all authentication.
+
 ## Domain (define problem):
 
 **Human Resource management**: Vacation Time tracking system which enables employees to keep track and manage their vacation days.
-
-<hr>
 
 ## Actors:
 
@@ -26,8 +52,6 @@ separate login IDs to manage these two different roles.<br>
 A role responsible for the smooth running of the system's
 technical resources (e.g., Web server, database) and for collecting and
 archiving all log files.<br>
-
-<hr>
 
 ## Use Cases
 
@@ -101,3 +125,19 @@ archiving all log files.<br>
 <div style="text-align: center">
 <img src="task1\Employee-Manager-sequence-diagram.png">
 </div>
+
+<br>
+<br>
+
+#### **Pseudocode:**
+
+```
+createVacationRequest(int employeeId, String vacationType, Date startDate, Date endDate)
+   if getRemainingBalance(employeeId, vacationType) < (endDate - startDate)
+      showError
+      Redirect to Requests homepage
+   else
+      sendRequest(employeeId, vacationType, startDate, endDate)
+      if isRequireManagerApproval(employeeId)
+         sendRequestManagerApprovalEmail(employee, vacationType, startDate, endDate)
+```
