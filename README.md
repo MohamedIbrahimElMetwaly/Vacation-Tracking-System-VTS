@@ -132,7 +132,7 @@ own vacation time.
 <br>
 <br>
 
-<div style="text-align: center">
+<div style="text-align:center">
 <img src="use-case-01\Employee-Manager-sequence-diagram.png">
 </div>
 
@@ -200,7 +200,7 @@ main flow preconditions.
 <br>
 <br>
 
-<div style="text-align: center">
+<div style="text-align:center">
 <img src="use-case-02\Employee-withdraw-request-sequence-diagram.png">
 </div>
 
@@ -294,5 +294,79 @@ cancelApprovedRequest(int requestId, int employeeId)
    Integer managerId = getEmployeeManager(employeeId)
    if(managerId != null)
       sendEmailToManagerUsingEmailService(employeeId, managerId)
+
+```
+
+<hr>
+
+### Use case:4
+
+#### **Goal**
+
+The employee wants to edit the description or title of a pending request.
+
+#### **Preconditions**
+
+An employee has made a vacation time request, and that
+request has yet to be approved or denied by an authorized manager.
+
+#### **Use case name: Edit pending Request**
+
+1. The employee navigates to the VTS home page through the intranet
+   portal application, which identifies and authenticates the employee with
+   the privileges necessary for using the VTS.
+2. The VTS home page contains a summary of vacation time requests,
+   outstanding balances per category of time, and the current status of all
+   active vacation time requests for the previous 6 months and up to 18
+   months in the future.
+3. The employee selects a request to edit, one that is pending approval.
+4. The VTS displays an editable view of the request. The employee is
+   allowed to change the title, comments, or dates. The employee can also
+   choose to delete or withdraw this request.
+5. The employee changes request information and submits the changes to
+   the system.
+6. If the employee withdraws the request, the VTS prompts for confirmation
+   before withdrawing the request. If changes are made only to the
+   information, the changes are accepted, and the screen returns to the
+   main VTS home page. If there are errors or problems with the information
+   changes, the VTS redisplays the editing page and highlights and
+   explains all problems.
+
+#### **Flowchart**
+
+<br>
+<br>
+
+<div style="text-align:center">
+<img src="use-case-04\Employee-edit-pending-request-flowchar.png" />
+</div>
+
+<br>
+
+#### **Sequence Diagram**
+
+<br>
+<br>
+
+<div style="text-align: center">
+<img src="use-case-04\Employee-edit-pending-request-sequence-diagram.png">
+</div>
+
+<br>
+<br>
+
+#### **Pseudocode:**
+
+```
+editPendingRequest(int requestId, String title, String description, int employeeId, boolean isWithdraw)
+   if(isWithdraw)
+      pendingRequestWithdraw(employeeId, requestId)
+      return
+
+   if(changesValid(title, description))
+      updatePendingRequest(requestId, title, description, employeeId)
+   else
+      highlight and explain error
+
 
 ```
