@@ -370,3 +370,19 @@ editPendingRequest(int requestId, String title, String description, int employee
 
 
 ```
+
+<hr>
+
+## Initial thoughts about UI pages (used Google stitch)
+
+### Manager homepage
+
+<div >
+<img src="UI-design-pages\Manager-homepage.png">
+</div>
+
+### Employee homepage
+
+<div >
+<img src="UI-design-pages\Employee-homepage.png">
+</div>
